@@ -1,5 +1,6 @@
 from django.db import models
 from apps.cart.models import Cart
+from apps.cart.models import Wishlist
 
 class Product(models.Model):
    name = models.CharField(max_length=255)
@@ -24,3 +25,14 @@ class CartItemShop(models.Model):
 
    def __str__(self):
        return f"{self.cart}_{self.product}"
+
+
+class WishlistItemShop(models.Model):
+   wishlist = models.ForeignKey(Wishlist, on_delete=models.CASCADE)
+   product = models.ForeignKey(Product, on_delete=models.CASCADE)
+   quantity = models.IntegerField(default=1)
+   created_at = models.DateTimeField(auto_now_add=True)
+   updated_at = models.DateTimeField(auto_now=True)
+
+   def __str__(self):
+      return f"{self.wishlist}_{self.product}"
